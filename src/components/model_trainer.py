@@ -1,3 +1,4 @@
+#here we will train various models and select the best model based on r2_score
 import os
 import sys
 from dataclasses import dataclass
@@ -33,15 +34,16 @@ class ModelTrainer:
             logging.info("Split training and test input data")
             X_train,y_train,X_test,y_test=(
                 train_array[:,:-1],
-                train_array[:,-1],
+                train_array[:,-1],              ##This is a tuple
                 test_array[:,:-1],
                 test_array[:,-1]
             )
             models = {
                 "Random Forest": RandomForestRegressor(),
                 "Decision Tree": DecisionTreeRegressor(),
-                "Gradient Boosting": GradientBoostingRegressor(),
+                "Gradient Boosting": GradientBoostingRegressor(),  ##this is a dictionary
                 "Linear Regression": LinearRegression(),
+                "K-Neighbors Regressor": KNeighborsRegressor(),
                 "XGBRegressor": XGBRegressor(),
                 "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor": AdaBoostRegressor(),
@@ -85,7 +87,7 @@ class ModelTrainer:
             }
 
             model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
-                                             models=models,param=params)
+                                             models=models)
             
             ## To get best model score from dict
             best_model_score = max(sorted(model_report.values()))
@@ -100,6 +102,8 @@ class ModelTrainer:
             if best_model_score<0.6:
                 raise CustomException("No best model found")
             logging.info(f"Best found model on both training and testing dataset")
+
+            
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
