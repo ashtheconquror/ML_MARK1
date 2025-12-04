@@ -1,0 +1,4 @@
+Retrieving logs...
+Logs were saved to D:\ML_MARK1\.elasticbeanstalk\logs\251127_092256
+Logs were saved to D:\ML_MARK1\.elasticbeanstalk\logs\251127_092256
+Updated symlink at D:\ML_MARK1\.elasticbeanstalk\logs\latest
